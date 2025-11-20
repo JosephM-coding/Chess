@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <title>Document</title>
+  </head>
+  <style>
+    .gameContainer {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+      padding: 0;
+    }
+    .cell {
+      width: 50px;
+      border: 2px solid black;
+      height: 50px;
+      align-content: center;
+      text-align: center;
+    }
+    .cell:hover {
+      border-radius: 10px;
+    }
+    .king {
+      background-color: gold;
+    }
+    .queen {
+      background-color: powderblue;
+      /* background: url("./Queen2.png"); */
+      object-fit: fill;
+    }
+    .horse {
+      background-color: red;
+    }
+    .bishop {
+      background-color: black;
+    }
+    .castle {
+      background-color: gray;
+    }
+    .pawn {
+      background-color: teal;
+    }
+  </style>
+  <body>
+    <div id="gameContainer" class="gameContainer"></div>
+    <script>
+      let currentPiece = "";
+      let prevId = "";
+      let pieces = ["queen", "king", "horse", "bishop", "castle", "pawn"];
+
+      function clickedOn(id) {
+        const myElement = document.getElementById(id);
+        for (let i = 0; i < pieces.length; i++) {
+          if (myElement.classList.contains(`${pieces[i]}`)) {
+            currentPiece = `${pieces[i]}`;
+            prevId = id;
+            myElement.style.border = "2px solid yellow";
+          }
+        }
+        if (!myElement.classList.contains(`${currentPiece}`)) {
+          myOldElement = document.getElementById(prevId);
+          myOldElement.style.border = "2px solid black";
+          myOldElement.classList.remove(`${currentPiece}`);
+          myElement.classList.add(`${currentPiece}`);
+          currentPiece = ``;
+        }
+        if (myElement.classList.contains()) console.log(currentPiece);
+        console.log(id);
+      }
+
+      function movePiece(id) {
+        currentPiece;
+      }
+
+      function makeBoard() {
+        const BOARD_WIDTH = 8;
+
+        const container = document.getElementById("gameContainer");
+        container.innerHTML = ""; // clear old board
+
+        for (let row = 0; row < BOARD_WIDTH; row++) {
+          for (let col = 0; col < BOARD_WIDTH; col++) {
+            container.innerHTML += `
+        <div id="${row * BOARD_WIDTH + col}"
+             class="cell"
+             onclick="clickedOn(this.id)">
+        </div>
+      `;
+          }
+        }
+        document.getElementById("0").classList.add("castle");
+        document.getElementById("1").classList.add("horse");
+        document.getElementById("2").classList.add("bishop");
+        document.getElementById("3").classList.add("king");
+        document.getElementById("4").classList.add("queen");
+        document.getElementById("5").classList.add("bishop");
+        document.getElementById("6").classList.add("horse");
+        document.getElementById("7").classList.add("castle");
+        for (let i = 8; i < 16; i++) {
+          document.getElementById(`${i}`).classList.add("pawn");
+        }
+      }
+
+      makeBoard();
+    </script>
+  </body>
+</html>
