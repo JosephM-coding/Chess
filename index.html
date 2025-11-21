@@ -51,27 +51,56 @@
       let pieces = ["queen", "king", "horse", "bishop", "castle", "pawn"];
 
       function clickedOn(id) {
+        let AllButOne = pieces.filter((item) => item !== currentPiece);
         const myElement = document.getElementById(id);
+        const myOldElement = document.getElementById(prevId);
+        console.log(AllButOne);
+        console.log(currentPiece);
+        console.log(id);
+        //Detects the piece you just clicked on
         for (let i = 0; i < pieces.length; i++) {
           if (myElement.classList.contains(`${pieces[i]}`)) {
             currentPiece = `${pieces[i]}`;
+            //Saves the previous elements id
             prevId = id;
             myElement.style.border = "2px solid yellow";
           }
         }
+        AvaliableMoves(myOldElement, myElement);
+        //if its not empty it will do nothing
+        for (let i = 0; i < AllButOne.length; i++) {
+          if (myElement.classList.contains(AllButOne[i])) {
+            myOldElement.style.border = "2px solid black";
+            return;
+          }
+        }
+        //Moving the piece if the spot is empty
         if (!myElement.classList.contains(`${currentPiece}`)) {
-          myOldElement = document.getElementById(prevId);
           myOldElement.style.border = "2px solid black";
           myOldElement.classList.remove(`${currentPiece}`);
           myElement.classList.add(`${currentPiece}`);
           currentPiece = ``;
         }
-        if (myElement.classList.contains()) console.log(currentPiece);
-        console.log(id);
       }
-
-      function movePiece(id) {
-        currentPiece;
+      function AvaliableMoves(myOldElement, myElement) {
+        console.log("Avaliable moves");
+        // console.log("MyOldElement in AvaliableMoves: ", myOldElement);
+        // console.log("MyElement in AvaliableMoves: ", myElement);
+        //Possible moves for queen
+        if (myElement.classList.contains("queen")) {
+          for (let i = 0; i < Number(myElement.id); i++) {
+            const possibleElement = document.getElementById(
+              `${i * 9 + Number(myElement.id)}`
+            );
+            possibleElement.style.border = "2px solid blue";
+          }
+          for (let i = 0; i < Number(myElement.id); i++) {
+            const possibleElement = document.getElementById(
+              `${i * 7 + Number(myElement.id)}`
+            );
+            possibleElement.style.border = "2px solid blue";
+          }
+        }
       }
 
       function makeBoard() {
